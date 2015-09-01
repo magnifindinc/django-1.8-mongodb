@@ -1,16 +1,13 @@
 """
-    django_mongoengine
+    django18_mongoengine for python 3.4
     ~~~~~~~~~~~~~~~~~~
-
-    Django and MongoEngine integration giving easy forms and generic views
-    integration.
 """
 from types import ModuleType
 import sys
 from django_mongoengine.utils.module import MongoEngine
 
+__version__ = '0.2'
 
-__version__ = '0.1'
 
 class module(ModuleType):
     """Automatically get attributes from the overloaded MongoEngine class module."""
@@ -25,7 +22,6 @@ class module(ModuleType):
                        '__docformat__', '__name__', '__path__',
                        '__package__', '__version__'))
         return result
-
 
 mongoengine_instance = MongoEngine()
 
