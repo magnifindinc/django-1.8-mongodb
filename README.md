@@ -1,4 +1,4 @@
-# MongoDB connector for Django 1.8
+# MongoDB 3 connector for Django 1.8
 ## Overview
 At magnifind we are using Django 1.8 as our tempting and session engine, we have made a decision to share our codebase to the community to enjoy the benefit of sharing.
 
