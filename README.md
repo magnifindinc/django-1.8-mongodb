@@ -22,7 +22,7 @@ python3.4 setup.py install
 
 ## Usage Example
 
-## Want to join? Great!!!
+## Want to join, suggent and/or ask questions? Great!!!
 
 Mailing List, feel free to join: https://groups.google.com/a/magnifind.ca/forum/#!forum/django-connector 
 
