@@ -24,9 +24,6 @@ python3.4 setup.py install
 
 ## Want to join, suggent and/or ask questions? Great!!!
 
-Mailing List, feel free to join: https://groups.google.com/a/magnifind.ca/forum/#!forum/django-connector 
-
-## Emails for contact
 Adir Iakya <adir.iakya@magnifind.ca>
 
 Michal Kulaczkowski <mkulaczkowski@gormanet.pl>
