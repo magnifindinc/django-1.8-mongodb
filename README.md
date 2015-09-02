@@ -1,6 +1,32 @@
 # MongoDB connector for Django 1.8
-At magnifind we are using Django 1.8 as our templating engine for the website along (also) with MongoDB 3 and also support session engine for 1.8.
+## Overview
+At magnifind we are using Django 1.8 as our tempting and session engine, we have made a decision to share our codebase to the community to enjoy the benefit of sharing.
 
-This is our work on Django 1.8 and Mongo connector with been doing collaborate with Michal Kulaczkowski (<mkulaczkowski@gormanet.pl>) from Gormanet.
+We are using this connector on our production environment, refine and extend it constantly.
+
+This connector is a mutual effort of Michal Kulaczkowski (<mkulaczkowski@gormanet.pl>) from Gronament Poland, and Magnifind.
 
 Michal is the official maintainer of this project, any pull requests goes to him.
+
+## Requirements
+This connector is designed for python 3.4
+
+## Installation
+(preferably create a virtual environment)
+```sh
+cd django-1.8-mongodb
+python3.4 setup.py install
+```
+
+## Configuration
+
+## Usage Example
+
+## Want to join? Great!!!
+
+Mailing List, feel free to join: https://groups.google.com/a/magnifind.ca/forum/#!forum/django-connector 
+
+## Emails for contact
+Adir Iakya <adir.iakya@magnifind.ca>
+Michal Kulaczkowski <mkulaczkowski@gormanet.pl>
+
