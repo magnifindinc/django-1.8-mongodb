@@ -28,5 +28,6 @@ Mailing List, feel free to join: https://groups.google.com/a/magnifind.ca/forum/
 
 ## Emails for contact
 Adir Iakya <adir.iakya@magnifind.ca>
+
 Michal Kulaczkowski <mkulaczkowski@gormanet.pl>
 
