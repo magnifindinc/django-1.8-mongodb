@@ -1,6 +1,7 @@
 from functools import update_wrapper
 
 from django import http, template
+
 from django.contrib.admin import ModelAdmin
 from django.contrib.admin.forms import AdminAuthenticationForm
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -209,7 +210,7 @@ class AdminSite(object):
         return update_wrapper(inner, view)
 
     def get_urls(self):
-        from django.conf.urls.defaults import patterns, url, include
+        from django.conf.urls import patterns, url, include
 
         if settings.DEBUG:
             self.check_dependencies()
@@ -245,7 +246,7 @@ class AdminSite(object):
 
 
         # Add in each model's views.
-        for model, model_admin in self._registry.iteritems():
+        for model, model_admin in self._registry.items():
             # Try to read app_label and module_name from classes _meta attribute.
             # If they don't exist we try to add a mongo document. app_label and module_name
             # are then created here and added to the document's _meta.
@@ -391,7 +392,7 @@ class AdminSite(object):
 
         # Sort the apps alphabetically.
         app_list = app_dict.values()
-        app_list.sort(key=lambda x: x['name'])
+        sorted(app_list, key=lambda x: x['name'])
 
         # Sort the models alphabetically within each app.
         for app in app_list:

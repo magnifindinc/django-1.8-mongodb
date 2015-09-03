@@ -1,7 +1,7 @@
 from django import forms
 from django.core.validators import EMPTY_VALUES
 from django.core.exceptions import ValidationError
-from django.utils.encoding import smart_unicode, force_unicode
+from django.utils.encoding import smart_text, force_text
 from django.utils.translation import ugettext_lazy as _
 
 from django_mongoengine.forms.widgets import Dictionary
@@ -33,7 +33,7 @@ class MongoCharField(forms.CharField):
     def to_python(self, value):
         if value in EMPTY_VALUES:
             return None
-        return smart_unicode(value)
+        return smart_text(value)
 
 
 class ReferenceField(forms.ChoiceField):
@@ -73,7 +73,7 @@ class ReferenceField(forms.ChoiceField):
         generate the labels for the choices presented by this object. Subclasses
         can override this method to customize the display of the choices.
         """
-        return smart_unicode(obj)
+        return smart_text(obj)
 
     def clean(self, value):
         if value in EMPTY_VALUES and not self.required:
@@ -132,9 +132,9 @@ class DocumentMultipleChoiceField(ReferenceField):
                 raise forms.ValidationError(self.error_messages['invalid_pk_value'] % pk)
         qs = self.queryset.clone()
         qs = qs.filter(**{'%s__in' % key: filter_ids})
-        pks = set([force_unicode(getattr(o, key)) for o in qs])
+        pks = set([force_text(getattr(o, key)) for o in qs])
         for val in value:
-            if force_unicode(val) not in pks:
+            if force_text(val) not in pks:
                 raise forms.ValidationError(self.error_messages['invalid_choice'] % val)
         # Since this overrides the inherited ModelChoiceField.clean
         # we run custom validators here

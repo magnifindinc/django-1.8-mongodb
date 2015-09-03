@@ -1,7 +1,9 @@
 from django import forms
 from django.core.validators import EMPTY_VALUES, RegexValidator
-from django.utils.encoding import smart_unicode
+from django.utils.encoding import smart_text
 from django.utils.text import capfirst
+from django_mongoengine.forms.fields import MongoCharField, ReferenceField, DocumentMultipleChoiceField, DictField
+
 try:
     from django.db.models.options import get_verbose_name
 except ImportError:
@@ -10,7 +12,7 @@ except ImportError:
 
 from mongoengine import ReferenceField as MongoReferenceField
 
-from fields import MongoCharField, ReferenceField, DocumentMultipleChoiceField, DictField
+#from fields import MongoCharField,
 
 BLANK_CHOICE_DASH = [("", "---------")]
 
@@ -62,7 +64,7 @@ class MongoFormFieldGenerator(object):
     def string_field(self, value):
         if value in EMPTY_VALUES:
             return None
-        return smart_unicode(value)
+        return smart_text(value)
 
     def integer_field(self, value):
         if value in EMPTY_VALUES:

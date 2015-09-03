@@ -9,7 +9,7 @@ from django.contrib.admin.helpers import InlineFieldset as DjangoInlineFieldset
 from django.contrib.admin.helpers import AdminField
 from django.core.exceptions import ObjectDoesNotExist
 
-from django.utils.encoding import smart_unicode
+from django.utils.encoding import smart_text as smart_unicode
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 

@@ -1,6 +1,6 @@
-import new
+from hashlib import new
+from django_mongoengine.forms import DocumentMetaWrapper
 
-from document_options import DocumentMetaWrapper
 
 def patch_document(function, instance):
     setattr(instance, function.__name__, new.instancemethod(function, instance, instance.__class__))

@@ -1,4 +1,4 @@
-from django.utils.encoding import force_unicode, smart_unicode, smart_str
+from django.utils.encoding import force_text, smart_text, smart_str
 from django.forms.forms import pretty_name
 from django.db.models.fields import FieldDoesNotExist
 from django.utils import formats
@@ -26,7 +26,7 @@ def label_for_field(name, model, model_admin=None, return_attr=False):
         label = field.name.replace('_', ' ')
     except FieldDoesNotExist:
         if name == "__unicode__":
-            label = force_unicode(model._admin_opts.verbose_name)
+            label = force_text(model._admin_opts.verbose_name)
         elif name == "__str__":
             label = smart_str(model._admin_opts.verbose_name)
         else:
@@ -76,7 +76,7 @@ def display_for_field(value, field):
     elif isinstance(field, fields.FloatField):
         return formats.number_format(value)
     else:
-        return smart_unicode(value)
+        return smart_text(value)
 
 
 def help_text_for_field(name, model):
@@ -84,4 +84,4 @@ def help_text_for_field(name, model):
         help_text = model._meta.get_field_by_name(name)[0].help_text
     except FieldDoesNotExist:
         help_text = ""
-    return smart_unicode(help_text, strings_only=True)
+    return smart_text(help_text, strings_only=True)

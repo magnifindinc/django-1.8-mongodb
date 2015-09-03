@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.paginator import Paginator
 from django.db import models, router
-from django.db.models.related import RelatedObject
+
 from django.db.models.fields import BLANK_CHOICE_DASH, FieldDoesNotExist
 from django.db.models.sql.constants import QUERY_TERMS
 from django.db.models.constants import LOOKUP_SEP
@@ -25,8 +25,13 @@ from django.utils.functional import curry
 from django.utils.text import capfirst, get_text_list
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text as force_unicode
 from django.forms.forms import pretty_name
+
+try:
+    from django.db.models.fields.related import ForeignObjectRel
+except ImportError:  # Django < 1.8
+    from django.db.models.related import RelatedObject as ForeignObjectRel
 
 from django_mongoengine.fields import (DateTimeField, URLField, IntField,
                                        ListField, EmbeddedDocumentField,
@@ -263,7 +268,7 @@ class BaseDocumentAdmin(object):
             if hasattr(field, 'rel'):
                 model = field.rel.to
                 pk_attr_name = model._meta.pk.name
-            elif isinstance(field, RelatedObject):
+            elif isinstance(field, ForeignObjectRel):
                 model = field.model
                 pk_attr_name = model._meta.pk.name
             else:
@@ -1349,7 +1354,7 @@ class DocumentAdmin(BaseDocumentAdmin):
 
         # Populate deleted_objects, a data structure of all related objects that
         # will also be deleted.
-        print "FIXME: Need to delete nested objects."
+        print("FIXME: Need to delete nested objects.")
         #(deleted_objects, perms_needed, protected) = get_deleted_objects(
         #    [obj], opts, request.user, self.admin_site, using)
 
