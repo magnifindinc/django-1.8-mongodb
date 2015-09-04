@@ -1,8 +1,9 @@
-from django.contrib.auth import SESSION_KEY, _get_user_session_key, HASH_SESSION_KEY, BACKEND_SESSION_KEY, user_logged_in
+from django.contrib.auth import SESSION_KEY, HASH_SESSION_KEY, BACKEND_SESSION_KEY, user_logged_in
 from django.middleware.csrf import rotate_token
+from django_mongoengine.middleware import get_user_session_key
 
 
-def login(request, user):
+def login(request, user=None):
     """
     Persist a user id and a backend in the request. This way a user doesn't
     have to reauthenticate on every request. Note that data set during
@@ -15,7 +16,7 @@ def login(request, user):
         session_auth_hash = user.get_session_auth_hash()
 
     if SESSION_KEY in request.session:
-        if _get_user_session_key(request) != user.pk or (
+        if get_user_session_key(request) != user.pk or (
                 session_auth_hash and
                 request.session.get(HASH_SESSION_KEY) != session_auth_hash):
             # To avoid reusing another user's session, create a new, empty
@@ -25,7 +26,7 @@ def login(request, user):
     else:
         request.session.cycle_key()
     request.session[SESSION_KEY] = str(user.pk)
-    request.session[BACKEND_SESSION_KEY] = user.backend
+    request.session[BACKEND_SESSION_KEY] = 'django_mongoengine.auth.backends.MongoEngineBackend'
     request.session[HASH_SESSION_KEY] = session_auth_hash
     if hasattr(request, 'user'):
         request.user = user

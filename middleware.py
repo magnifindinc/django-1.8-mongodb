@@ -13,10 +13,11 @@ class AuthenticationMiddleware(object):
             "'django.contrib.sessions.middleware.SessionMiddleware' before "
             "'django.contrib.auth.middleware.AuthenticationMiddleware'."
         )
-        request.user = SimpleLazyObject(lambda: get_user(_get_user_session_key(request)))
+        request.user = SimpleLazyObject(lambda: get_user(get_user_session_key(request)))
 
 from bson.objectid import ObjectId
-def _get_user_session_key(request):
+
+def get_user_session_key(request):
     # This value in the session is always serialized to a string, so we need
     # to convert it back to Python whenever we access it.
     if SESSION_KEY in request.session:
