@@ -1,4 +1,5 @@
 import datetime
+from django.core.urlresolvers import reverse
 
 from django.utils.encoding import smart_str
 from django.contrib.auth.models import AnonymousUser
@@ -131,6 +132,9 @@ all permissions without explicitly assigning them."""))
                  set__is_active=True,
                  set__is_superuser=True)
         return u
+
+    def get_absolute_url(self):
+        return reverse('user_detail_view', kwargs={"username": self.username})
 
     def get_and_delete_messages(self):
         return []

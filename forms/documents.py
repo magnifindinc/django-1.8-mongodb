@@ -45,7 +45,7 @@ def construct_instance(form, instance, fields=None, exclude=None, ignore=None):
     if isinstance(instance, type):
         instance = instance()
 
-    for f in instance._fields.itervalues():
+    for f in instance._fields.values():
         if isinstance(f, ObjectIdField):
             continue
         if not f.name in cleaned_data:
@@ -104,7 +104,7 @@ def save_instance(form, instance, fields=None, fail_message='saved',
         # see BaseDocumentForm._post_clean for an explanation
         if hasattr(form, '_delete_before_save'):
             fields = instance._fields
-            new_fields = dict([(n, f) for n, f in fields.iteritems()
+            new_fields = dict([(n, f) for n, f in fields.items()
                                 if not n in form._delete_before_save])
             if hasattr(instance, '_changed_fields'):
                 for field in form._delete_before_save:
@@ -131,7 +131,7 @@ def document_to_dict(instance, fields=None, exclude=None):
     the ``fields`` argument.
     """
     data = {}
-    for f in instance._fields.itervalues():
+    for f in instance._fields.values():
         if fields and not f.name in fields:
             continue
         if exclude and f.name in exclude:
@@ -239,7 +239,7 @@ class DocumentFormMetaclass(type):
             fields = fields_for_document(opts.document, opts.fields,
                             opts.exclude, opts.widgets, formfield_callback, formfield_generator)
             # make sure opts.fields doesn't specify an invalid field
-            none_document_fields = [k for k, v in fields.iteritems() if not v]
+            none_document_fields = [k for k, v in fields.items() if not v]
             missing_fields = set(none_document_fields) - \
                              set(declared_fields.keys())
             if missing_fields:
@@ -306,7 +306,7 @@ class BaseDocumentForm(BaseForm):
         exclude = []
         # Build up a list of fields that should be excluded from model field
         # validation and unique checks.
-        for f in self.instance._fields.itervalues():
+        for f in self.instance._fields.values():
             field = f.name
             # Exclude fields that aren't on the form. The developer may be
             # adding these values to the model after form validation.
@@ -349,7 +349,7 @@ class BaseDocumentForm(BaseForm):
         """
         errors = []
         exclude = self._get_validation_exclusions()
-        for f in self.instance._fields.itervalues():
+        for f in self.instance._fields.values():
             if f.unique and f.name not in exclude:
                 filter_kwargs = {
                     f.name: getattr(self.instance, f.name)
@@ -361,8 +361,8 @@ class BaseDocumentForm(BaseForm):
                     qs = qs.filter(pk__ne=self.instance.pk)
                 if len(qs) > 0:
                     message = _("%(model_name)s with this %(field_label)s already exists.") % {
-                                'model_name': unicode(capfirst(self.instance._meta.verbose_name)),
-                                'field_label': unicode(pretty_name(f.name))
+                                'model_name': str(capfirst(self.instance._meta.verbose_name)),
+                                'field_label': str(pretty_name(f.name))
                     }
                     err_dict = {f.name: [message]}
                     self._update_errors(err_dict)
@@ -402,7 +402,7 @@ class BaseDocumentForm(BaseForm):
                 self.instance.save()
         else:
             update = {}
-            for name, data in self.cleaned_data.iteritems():
+            for name, data in self.cleaned_data.items():
 
                 try:
                     if isinstance(data, datetime.datetime):

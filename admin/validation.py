@@ -173,6 +173,7 @@ def _validate(cls, model):
             validate_base(inline, inline.document)
             validate_inline(inline, cls, model)
 
+
 def validate_inline(cls, parent, parent_model):
 
     # model is already verified to exist and be a Model
@@ -212,6 +213,7 @@ def validate_inline(cls, parent, parent_model):
 
     if hasattr(cls, "readonly_fields"):
         check_readonly_fields(cls, cls.document, cls.document._meta)
+
 
 def validate_base(cls, model):
     opts = model._meta
@@ -362,13 +364,16 @@ def validate_base(cls, model):
             for idx, f in enumerate(val):
                 get_field(cls, model, opts, "prepopulated_fields['%s'][%d]" % (field, idx), f)
 
+
 def check_isseq(cls, label, obj):
     if not isinstance(obj, (list, tuple)):
         raise ImproperlyConfigured("'%s.%s' must be a list or tuple." % (cls.__name__, label))
 
+
 def check_isdict(cls, label, obj):
     if not isinstance(obj, dict):
         raise ImproperlyConfigured("'%s.%s' must be a dictionary." % (cls.__name__, label))
+
 
 def get_field(cls, model, opts, label, field):
     try:
@@ -376,6 +381,7 @@ def get_field(cls, model, opts, label, field):
     except models.FieldDoesNotExist:
         raise ImproperlyConfigured("'%s.%s' refers to field '%s' that is missing from model '%s'."
                 % (cls.__name__, label, field, model.__name__))
+
 
 def check_formfield(cls, model, opts, label, field):
     if getattr(cls.form, 'base_fields', None):
@@ -397,12 +403,14 @@ def check_formfield(cls, model, opts, label, field):
             raise ImproperlyConfigured("'%s.%s' refers to field '%s' that "
                 "is missing from the form." % (cls.__name__, label, field))
 
+
 def fetch_attr(cls, model, opts, label, field):
     try:
         return getattr(model, field)
     except AttributeError:
         raise ImproperlyConfigured("'%s.%s' refers to '%s' that is neither a field, method or property of model '%s'."
             % (cls.__name__, label, field, model.__name__))
+
 
 def check_readonly_fields(cls, model, opts):
     check_isseq(cls, "readonly_fields", cls.readonly_fields)

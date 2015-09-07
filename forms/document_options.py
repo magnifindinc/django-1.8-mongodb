@@ -163,7 +163,7 @@ class DocumentMetaWrapper(object):
         if self._field_cache is None:
             self._field_cache = {}
 
-        for f in self.document._fields.itervalues():
+        for f in self.document._fields.values():
             if isinstance(f, ReferenceField):
                 document = f.document_type
                 document._meta = DocumentMetaWrapper(document)

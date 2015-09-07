@@ -14,11 +14,13 @@ from django.db import models
 
 from django.contrib.admin.actions import delete_selected as django_delete_selected
 
+
 def delete_selected(modeladmin, request, queryset):
     if issubclass(modeladmin.model, models.Model):
         return django_delete_selected(modeladmin, request, queryset)
     else:
         return _delete_selected(modeladmin, request, queryset)
+
 
 def _delete_selected(modeladmin, request, queryset):
     """

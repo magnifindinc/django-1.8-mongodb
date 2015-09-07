@@ -361,7 +361,7 @@ class DocumentAdmin(BaseDocumentAdmin):
             'ENGINE', 'django.db.backends.dummy').endswith('dummy')
 
     def get_inline_instances(self):
-        for f in self.document._fields.itervalues():
+        for f in self.document._fields.values():
             if not (isinstance(f, ListField) and isinstance(getattr(f, 'field', None), EmbeddedDocumentField)) and not isinstance(f, EmbeddedDocumentField):
                 continue
             # Should only reach here if there is an embedded document...
@@ -687,7 +687,7 @@ class DocumentAdmin(BaseDocumentAdmin):
         tuple (name, description).
         """
         choices = [] + default_choices
-        for func, name, description in self.get_actions(request).itervalues():
+        for func, name, description in self.get_actions(request).values():
             choice = (name, description % model_format_dict(self.opts))
             choices.append(choice)
         return choices

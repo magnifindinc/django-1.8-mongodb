@@ -1,0 +1,148 @@
+{% load i18n %}
+{% load url from future %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>Magnifind</title>
+    <meta name="keywords" content="Magnifind"/>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,300">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static "assets/skin/default_skin/css/theme.css"%}">
+
+    <!-- Admin Forms CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static "assets/admin-tools/admin-forms/css/admin-forms.css"%}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static "assets/img/favicon.ico"%}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"%}"></script>
+   <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"%}"></script>
+   <![endif]-->
+</head>
+
+<body class="external-page sb-l-c sb-r-c">
+
+<!-- Start: Main -->
+<div id="main" class="animated fadeIn">
+
+    <!-- Start: Content -->
+    <section id="content_wrapper">
+
+        <!-- begin canvas animation bg -->
+        <div id="canvas-wrapper">
+            <canvas id="demo-canvas"></canvas>
+        </div>
+
+        <!-- Begin: Content -->
+        <section id="content">
+            {% block "content" %}
+                <div class="admin-form theme-info" id="login1">
+
+                    <div class="row mb15 table-layout">
+
+                        <div class="col-xs-6 va-m pln">
+                            <a href="dashboard.html" title="Return to Dashboard">
+                                <img src="{% static "images/logo.png"%}" title="Magnifind" class="img-responsive w250">
+                            </a>
+                        </div>
+
+                        <div class="col-xs-6 text-right va-b pr5">
+                            <div class="login-links">
+                                <a href="{% url 'login' %}" class="active" title="Sign In">Login</a>
+                                <span class="text-white"> | </span>
+                                {# TODO                            <a href="pages_register.html" class="" title="Register">Zarejestruj się</a>#}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="panel panel-info mt10 br-n">
+
+                        <!-- end .form-header section -->
+                        <div class="panel-body bg-light p30">
+                            <div class="row">
+                                {% block content %}
+                                <div class="col-sm-7 pr30">
+                                    <form method="post">
+                                    {% csrf_token %}
+                                    {{ form|crispy }}
+                                    <div class="buttonHolder"><input type="submit" name="submit" value="Login" class="btn btn-primary submit_button btn" id="submit-id-submit"> </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-5 br-l br-grey pl30">
+                                    <h3 class="mb25"> Please login</h3>
+                                </div>
+                                {% endblock %}
+                            </div>
+                        </div>
+                        <!-- end .form-body section -->
+                        <div class="panel-footer clearfix p10 ph15">
+                        </div>
+                        <!-- end .form-footer section -->
+                    </div>
+                </div>
+
+                </section>
+                <!-- End: Content -->
+            {% endblock "content" %}
+    </section>
+    <!-- End: Content-Wrapper -->
+
+</div>
+
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+
+<!-- Bootstrap -->
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<!-- Page Plugins -->
+<script type="text/javascript" src="{% static "assets/js/pages/login/EasePack.min.js"%}"></script>
+<script type="text/javascript" src="{% static "assets/js/pages/login/rAF.js"%}"></script>
+<script type="text/javascript" src="{% static "assets/js/pages/login/TweenLite.min.js"%}"></script>
+<script type="text/javascript" src="{% static "assets/js/pages/login/login.js"%}"></script>
+
+<!-- Theme Javascript -->
+<script type="text/javascript" src="{% static "assets/js/utility/utility.js"%}"></script>
+<script type="text/javascript" src="{% static "assets/js/main.js"%}"></script>
+
+<!-- Page Javascript -->
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+
+        "use strict";
+
+        // Init Theme Core
+        Core.init();
+        // Init CanvasBG and pass target starting location
+        CanvasBG.init({
+            Loc: {
+                x: window.innerWidth / 2,
+                y: window.innerHeight / 3.3
+            },
+        });
+
+
+    });
+</script>
+
+<!-- END: PAGE SCRIPTS -->
+
+</body>
+
+</html>
